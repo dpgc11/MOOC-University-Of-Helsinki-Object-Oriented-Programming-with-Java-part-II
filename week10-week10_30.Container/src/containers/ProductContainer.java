@@ -11,25 +11,27 @@ package containers;
  */
 public class ProductContainer extends Container{
 
-    private String productName;
+    private String name;
     
-    public ProductContainer(String productName, double capacity) {
+    
+    public ProductContainer(String name, double capacity) {
         super(capacity);
-        this.productName = productName;
+        this.name = name;
     }
 
     public String getName() {
-        return productName;
+        return name;
     }
-
-    public void setName(String productName) {
-        this.productName = productName;
+    
+    public void setName(String newName) {
+        this.name = newName;
     }
 
     @Override
     public String toString() {
-        return getName() + ": " + super.toString() ; //To change body of generated methods, choose Tools | Templates.
+        return getName() + ": " + super.toString(); //To change body of generated methods, choose Tools | Templates.
     }
+    
     
     
     

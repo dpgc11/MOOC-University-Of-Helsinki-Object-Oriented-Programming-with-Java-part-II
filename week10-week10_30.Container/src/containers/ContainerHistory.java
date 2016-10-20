@@ -6,7 +6,6 @@
 package containers;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -14,99 +13,99 @@ import java.util.List;
  */
 public class ContainerHistory {
 
-    private List<Double> history;
+    private ArrayList<Double> history;
 
     public ContainerHistory() {
-        history = new ArrayList<Double>();
+        this.history = new ArrayList<Double>();
     }
 
     public void add(double situation) {
-        history.add(situation);
+        this.history.add(situation);
     }
 
     public void reset() {
-        history.clear();
+        this.history.clear();
     }
 
     @Override
     public String toString() {
-        //To change body of generated methods, choose Tools | Templates.
-        return history.toString();
+        return this.history.toString(); //To change body of generated methods, choose Tools | Templates.
     }
 
     public double maxValue() {
-        if (history.isEmpty()) {
+
+        if (this.history.isEmpty()) {
             return 0.0;
         }
 
-        double maxValue = history.get(0);
-        for (Double d : history) {
-            if (d > maxValue) {
-                maxValue = d;
+        double max = this.history.get(0);
+        for (Double d : this.history) {
+            if (d > max) {
+                max = d;
             }
         }
-
-        return maxValue;
+        return max;
     }
 
     public double minValue() {
-        if (history.isEmpty()) {
+
+        if (this.history.isEmpty()) {
             return 0.0;
         }
 
-        double minValue = history.get(0);
-        for (Double d : history) {
-            if (d < minValue) {
-                minValue = d;
+        double min = this.history.get(0);
+        for (Double d : this.history) {
+            if (d < min) {
+                min = d;
             }
         }
-
-        return minValue;
+        return min;
     }
 
     public double average() {
-        if (history.isEmpty()) {
-            return 0.0;
-        }
-
-        double average;
-        double total = 0.0;
+        double avg = 0.0;
+        double sum = 0;
 
         for (Double d : history) {
-            total += d;
+            sum += d;
         }
 
-        average = (total / history.size());
-        return average;
-
+        avg = (sum / history.size());
+        return avg;
     }
 
     public double greatestFluctuation() {
         if (history.isEmpty() || history.size() == 1) {
             return 0.0;
         }
-        double greatestFluc = 0, fluc = 0, lastVal = history.get(0);
-        for (double d : history) {
-            fluc = Math.abs(lastVal - d);
-            if (fluc > greatestFluc) {
-                greatestFluc = fluc;
+
+        double max = Math.abs(history.get(0) - history.get(1));
+        double difference;
+
+        for (int i = 1; i < history.size() - 1; i++) {
+            difference = Math.abs(history.get(i) - history.get(i + 1));
+            if (difference > max) {
+                max = difference;
             }
-            lastVal = d;
         }
-        
-        return greatestFluc;
+        difference = Math.abs(history.get(history.size() - 2) - history.get(history.size() - 1));
+        if (difference > max) {
+            max = difference;
+        }
+
+        return max;
     }
 
     public double variance() {
-        if (history.isEmpty() || history.size() == 1) {
-            return 0.0;
+        double avg = average();
+        double sum = 0.0;
+        double num;
+        for (Double d : history) {
+            num = (d - avg);
+            sum += Math.pow(num, 2);
         }
-        double variance = 0;
-        
-        for(double d : history) {
-            variance += Math.pow(d-this.average(), 2);
-        }
-        return variance/(history.size()-1);
+        double variance = (sum / (history.size() - 1));
+        return variance;
     }
 
 }
