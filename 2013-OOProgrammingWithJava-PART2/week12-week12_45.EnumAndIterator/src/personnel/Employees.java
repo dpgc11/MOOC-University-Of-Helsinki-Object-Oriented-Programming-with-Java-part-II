@@ -45,7 +45,9 @@ public class Employees {
         Iterator<Person> iterator = employees.iterator();
         
         while(iterator.hasNext()) {
-            System.out.println(iterator.next().getEducation());
+            Person p = iterator.next();
+            if (p.getEducation() == education)
+                System.out.println(p);
         }
     }
     
@@ -54,8 +56,9 @@ public class Employees {
         List<Person> toBeRemoved = new ArrayList<Person>();
         
         while(iterator.hasNext()) {
-            if (iterator.next().getEducation() == education) 
-                toBeRemoved.add(iterator.next());
+            Person p = iterator.next();
+            if (p.getEducation() == education) 
+                toBeRemoved.add(p);
         }
         
         employees.removeAll(toBeRemoved);
