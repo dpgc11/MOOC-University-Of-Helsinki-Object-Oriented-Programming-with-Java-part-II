@@ -10,7 +10,7 @@ package reference.domain;
  * @author Yogesh
  */
 public class Film {
-    
+
     private String name;
 
     public Film(String name) {
@@ -43,7 +43,9 @@ public class Film {
         return true;
     }
 
-    
-    
-    
+    @Override
+    public String toString() {
+        return getName(); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
