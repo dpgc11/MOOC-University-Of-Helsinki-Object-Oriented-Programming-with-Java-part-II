@@ -12,6 +12,7 @@ package reference.domain;
 public class Person {
     
     private String name;
+    private int identity;
 
     public Person(String name) {
         this.name = name;
@@ -32,7 +33,7 @@ public class Person {
         hash = 37 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -47,8 +48,15 @@ public class Person {
         }
         return true;
     }
+
+    public void setIdentity(int identity) {
+        this.identity = identity;
+    }
+
+    public int getIdentity() {
+        return identity;
+    }
     
     
-    
-    
+
 }
