@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import reference.domain.Film;
+import reference.domain.Person;
 import reference.domain.Rating;
 
 /**
@@ -19,9 +20,11 @@ import reference.domain.Rating;
 public class RatingRegister {
 
     private Map<Film, List<Rating>> register;
+    private Map<Person, Map<Film, Rating>> personalRating;
 
     public RatingRegister() {
         this.register = new HashMap<Film, List<Rating>>();
+        this.personalRating = new HashMap<Person, Map<Film, Rating>>();
     }
 
     public void addRating(Film film, Rating rating) {
@@ -49,4 +52,52 @@ public class RatingRegister {
         return this.register;
     }
 
+    public void addRating(Person person, Film film, Rating rating) {
+        if (!this.personalRating.containsKey(person)) {
+            this.personalRating.put(person, new HashMap<Film, Rating>());
+            if (!this.personalRating.get(person).containsKey(film)) {
+                this.personalRating.get(person).put(film, rating);
+                addRating(film, rating);
+            }
+        } else {
+            if (!this.personalRating.get(person).containsKey(film)) {
+                this.personalRating.get(person).put(film, rating);
+                addRating(film, rating);
+            }
+        }
+    }
+
+    public Rating getRating(Person person, Film film) {
+        Rating r;
+
+        if (this.personalRating.containsKey(person)) {
+            if (this.personalRating.get(person).containsKey(film)) {
+                r = this.personalRating.get(person).get(film);
+                return r;
+            }
+        }
+        r = Rating.NOT_WATCHED;
+        return r;
+    }
+
+    public Map<Film, Rating> getPersonalRatings(Person person) {
+        Map<Film, Rating> pRatings = new HashMap<Film, Rating>();
+        if (this.personalRating.containsKey(person)) {
+            pRatings = this.personalRating.get(person);
+        }
+
+        return pRatings;
+    }
+
+    public List<Person> reviewers() {
+        List<Person> reviewersOfFilms = new ArrayList<Person>();
+
+        for (Person p : this.personalRating.keySet()) {
+            if (!this.personalRating.get(p).isEmpty()) {
+                reviewersOfFilms.add(p);
+            }
+        }
+
+        return reviewersOfFilms;
+    }
 }
